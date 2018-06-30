@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS orders (
 		ON DELETE CASCADE
 );
 
+-- INSERT DATA INTO CUSTOMERS
+
 INSERT INTO customers (first_name, last_name, email)
 VALUES ('Boy', 'George', 'george@gmail.com'),
 	   ('George', 'Michael', 'gm@gmail.com'),
@@ -41,7 +43,7 @@ VALUES ('Boy', 'George', 'george@gmail.com'),
        ('Bette', 'Davis', 'bette@aol.com'),
 	   ('Chuck', 'Norris', 'chuck@gmail.com');
 
-
+-- INSERT DATA INTO ORDERS
 
 INSERT INTO orders (order_date, amount, customer_id)
 VALUES ('2016/02/10', 99.99, 1),
