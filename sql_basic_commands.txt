@@ -1,0 +1,514 @@
+------------------------------------------------
+------------------------------------------------
+##########################
+### terminal commands: ###
+##########################
+
+    brew install mysql
+
+        # use homebrew to install MySQL
+
+------------------------------------------------
+
+    brew services start mysql
+
+        # Use homebrew to start you MySQL Server a sa "service",
+        meaning it will run in the background and allow connections
+
+------------------------------------------------
+
+    mysqladmin -u root password "root"
+
+        # Now with MySQL installed, you have access tro some new 
+        command line tools. Run the following command to set the 
+        MySQL root user's password to root
+
+------------------------------------------------
+
+    mysql -u root -p
+
+        # run mysql in terminal
+
+------------------------------------------------
+------------------------------------------------
+
+########################
+###  MySQL commands: ###
+########################
+
+    SELECT @@HOSTNAME;
+        #show the hostname of the database (e.g. prescotts-iMac.local)
+
+------------------------------------------------
+
+    SHOW DATABASES;
+        #show current databases
+
+------------------------------------------------
+
+    CREATE DATABASE 'database_name'
+        # e.g. CREATE DATABASE cats;
+
+------------------------------------------------
+
+    DROP DATABASE 'database_name'
+        # delete database - is permanent!
+
+------------------------------------------------
+
+    USE 'database_name'
+        # activate a database
+
+------------------------------------------------    
+    
+    SELECT DATABASE();
+        # show active database:
+        mysql> select database();
+            +----------------+
+            | database()     |
+            +----------------+
+            | dog_walking_ap |
+            +----------------+
+            1 row in set (0.00 sec)
+
+------------------------------------------------
+
+    CREATE TABLE 'table_name' ( 
+            column_name data_type, 
+            column_name data_type
+        ); 
+
+    # e.g. 
+
+    CREATE TABLE cats ( 
+            name VARCHAR(100),
+            age  INT 
+        ); 
+
+    CREATE TABLE cats4 ( 
+            name VARCHAR(100) NOT NULL DEFAULT 'unnamed',
+            age  INT NOT NULL DEFAULT 99
+        ); 
+
+    CREATE TABLE unique_cats (cat_id INT NOT NULL
+                      ,name VARCHAR(100) 
+                      ,age INT
+                      ,PRIMARY KEY (cat_id));
+
+    CREATE TABLE unique_cats2 (cat_id INT NOT NULL AUTO_INCREMENT
+                      ,name VARCHAR(100) 
+                      ,age INT
+                      ,PRIMARY KEY (cat_id));
+    
+    CREATE TABLE employees (
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        first_name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL,
+        middle_name VARCHAR(255),
+        age INT NOT NULL,
+        current_status VARCHAR(255) NOT NULL DEFAULT 'employed'
+    );
+
+------------------------------------------------
+
+    SHOW TABLES;
+
+    mysql> show tables
+    -> ;
+    +--------------------------+
+    | Tables_in_dog_walking_ap |
+    +--------------------------+
+    | cats                     |
+    +--------------------------+
+    1 row in set (0.00 sec)
+
+
+------------------------------------------------
+
+    SHOW COLUMNS FROM  'table_name'
+
+    #
+    mysql> show columns from cats;
+    +-------+--------------+------+-----+---------+-------+
+    | Field | Type         | Null | Key | Default | Extra |
+    +-------+--------------+------+-----+---------+-------+
+    | name  | varchar(100) | YES  |     | NULL    |       |
+    | age   | int(11)      | YES  |     | NULL    |       |
+    +-------+--------------+------+-----+---------+-------+
+    2 rows in set (0.00 sec)
+
+------------------------------------------------
+
+    DESC 'table_name'
+
+    #
+    mysql> DESC cats;
+    +-------+--------------+------+-----+---------+-------+
+    | Field | Type         | Null | Key | Default | Extra |
+    +-------+--------------+------+-----+---------+-------+
+    | name  | varchar(100) | YES  |     | NULL    |       |
+    | age   | int(11)      | YES  |     | NULL    |       |
+    +-------+--------------+------+-----+---------+-------+
+    2 rows in set (0.00 sec)
+
+------------------------------------------------
+
+    SELECT * FROM 'table_name'
+
+    # show data in tables
+
+    mysql> select * from people;
+    +------------+------------+------+
+    | first_name | last_name  | age  |
+    +------------+------------+------+
+    | Tina       | Belcher    |   13 |
+    | Bob        | Belcher    |   42 |
+    | Linda      | Belcher    |   45 |
+    | Phillip    | Frond      |   38 |
+    | Calvin     | Fischoeder |   70 |
+    +------------+------------+------+
+    5 rows in set (0.00 sec)
+
+------------------------------------------------
+
+    DROP TABLE 'table_name'
+
+    #
+    mysql> DROP TABLE cats;
+    Query OK, 0 rows affected (0.01 sec)
+
+------------------------------------------------
+
+    INSERT INTO table_name(column_name) VALUES (data);
+
+    INSERT INTO table_name 
+                (column_name, column_name) 
+    VALUES      (value, value), 
+                (value, value), 
+                (value, value);
+
+    # e.g. 
+
+    INSERT INTO cats(name, age) VALUES ('Jetson', 7); 
+
+    INSERT INTO cats 
+                (name, age) 
+    VALUES      ('Peanut', 3), 
+                ('Butter', 5), 
+                ('Jelly', 1);
+
+------------------------------------------------
+
+    SHOW WARNINGS;
+
+    # show information on generated warning
+        must be done immediately following a warning while in terminal!
+
+------------------------------------------------
+
+
+
+------------------------------------------------
+------------------------------------------------
+
+
+------------------------------------------------
+------------------------------------------------
+
+###################
+###   C R U D   ###
+###################
+
+CREATE - insert
+    
+READ - select
+
+UPDATE - update
+
+DELETE / DESTROY
+
+------------------------------------------------
+
+READ
+    SELECT * FROM... (* = print all columns)
+    SELECT val,val,val... FROM...
+
+    SELECT * FROM ... WHERE...
+        select * from cats where age=4;
+
+    ALIAS: select cat_id as id, name from cats...
+
+------------------------------------------------
+
+UPDATE
+    update cats set breed = 'shorhair' where breed = 'Tabby';
+
+------------------------------------------------
+
+DELETE / DESTROY
+    delete from cats where name = 'egg';
+    
+
+------------------------------------------------
+
+
+------------------------------------------------
+------------------------------------------------
+
+###################
+###  Date Time  ###
+###################
+
+------------------------------------------------
+DATE
+    
+    CURDATE()
+
+    'YYYY-MM-DD' format
+
+------------------------------------------------
+TIME
+
+    CURTIME()
+
+    (used the least)
+    'HH:MM:SS' format
+
+------------------------------------------------
+DATETIME
+    
+    NOW()
+
+    'YYYY-MM-DD HH:MM:SS' format
+
+------------------------------------------------
+formatting dates:
+    SELECT name, birthdate FROM people;
+ 
+    SELECT name, DAY(birthdate) FROM people;
+    
+    SELECT name, birthdate, DAY(birthdate) FROM people;
+    
+    SELECT name, birthdate, DAYNAME(birthdate) FROM people;
+    
+    SELECT name, birthdate, DAYOFWEEK(birthdate) FROM people;
+    
+    SELECT name, birthdate, DAYOFYEAR(birthdate) FROM people;
+    
+    SELECT name, birthtime, DAYOFYEAR(birthtime) FROM people;
+    
+    SELECT name, birthdt, DAYOFYEAR(birthdt) FROM people;
+    
+    SELECT name, birthdt, MONTH(birthdt) FROM people;
+    
+    SELECT name, birthdt, MONTHNAME(birthdt) FROM people;
+    
+    SELECT name, birthtime, HOUR(birthtime) FROM people;
+    
+    SELECT name, birthtime, MINUTE(birthtime) FROM people;
+    
+    SELECT CONCAT(MONTHNAME(birthdate), ' ', DAY(birthdate), ' ', YEAR(birthdate)) FROM people;
+    
+    SELECT DATE_FORMAT(birthdt, 'Was born on a %W') FROM people;
+    
+    SELECT DATE_FORMAT(birthdt, '%m/%d/%Y') FROM people;
+    
+    SELECT DATE_FORMAT(birthdt, '%m/%d/%Y at %h:%i') FROM people;
+------------------------------------------------
+date math:
+
+    SELECT DATEDIFF(NOW(), birthdate) FROM people;
+    
+    SELECT name, birthdate, DATEDIFF(NOW(), birthdate) FROM people;
+    
+    SELECT birthdt, DATE_ADD(birthdt, INTERVAL 1 MONTH) FROM people;
+    
+    SELECT birthdt, DATE_ADD(birthdt, INTERVAL 10 SECOND) FROM people;
+    
+    SELECT birthdt, DATE_ADD(birthdt, INTERVAL 3 QUARTER) FROM people;
+    
+    SELECT birthdt, birthdt + INTERVAL 1 MONTH FROM people;
+    
+    SELECT birthdt, birthdt - INTERVAL 5 MONTH FROM people;
+    
+    SELECT birthdt, birthdt + INTERVAL 15 MONTH + INTERVAL 10 HOUR FROM people;
+------------------------------------------------
+Timestamps:
+
+create table comments (
+    -> content varchar(100),
+    -> created_at TIMESTAMP default now()
+    -> );
+
+    mysql> insert into comments (content) values ('Rubber baby buggy bumpers');
+
+
+    mysql> create table comments2 (
+    -> content varchar(100),
+    -> changed_at TIMESTAMP default now() on update current_timestamp
+    -> );
+
+    create table comments3 (
+    content varchar(100),
+    changed_at datetime default now() on update now()
+    );
+------------------------------------------------
+------------------------------------------------
+
+###################
+###   Logical   ###
+###################
+
+>,<,=.!, not, and (&&), or (||), between
+------------------------------------------------
+select 'a' < 'b';
+    result = 1 (true)
+
+select 'a' != 'A';
+    result = 0 (false)
+------------------------------------------------
+BETWEEN
+
+    is the exact same as 'x >= and <= y'
+
+        select title, released_year from books where released_year >= 2004 and <= 2015;
+
+    'between x and y'
+
+        select title, released_year from books where released_year between 2004 and 2015;
+
+    'not between x and y'
+
+        select title, released_year from books where released_year not between 2004 and 2015;
+    
+    using between with DATETIME or TIMESTAMP - convert them to be equivalent first
+
+        select cast('2017-05-02' as datetime);
+
+            (if there's no time - cast will set time to 00:00:00)
+
+        SELECT 
+            name, 
+            birthdt 
+        FROM people
+        WHERE 
+            birthdt BETWEEN CAST('1980-01-01' AS DATETIME)
+            AND CAST('2000-01-01' AS DATETIME);
+
+------------------------------------------------
+IN and NOT IN
+
+    select title, author_lname from books
+    where author_lname in ('carver', 'lahiri', 'smith');
+
+------------------------------------------------
+------------------------------------------------
+
+------------------------------------------------
+ ############# CASE STATEMENTS ################
+------------------------------------------------
+
+    select title, released_year,
+        CASE
+            when released_year >= 2000 then 'Modern Lit'
+            else '20th century lit'
+        end as genre
+    from books;
+
+------------------------------------------------
+
+    select title, stock_quantity,
+        CASE
+            when stock_quantity between 0 and 50 then '*'
+            when stock_quantity between 51 and 100 then '**'
+            else '***'
+        end as STOCK
+    from books;
+
+    select title, 
+        CASE
+            when stock_quantity between 0 and 50 then '*'
+            when stock_quantity between 51 and 100 then '**'
+            else '***'
+        end as STOCK
+    from books;
+
+    select title, stock_quantity,
+        CASE
+            when stock_quantity between 0 and 50 then '*'
+            when stock_quantity between 51 and 100 then '**'
+            when stock_quantity between 101 and 150 then '***'
+            else '****'
+        end as STOCK
+    from books;
+
+    select title, stock_quantity,
+        CASE
+            when stock_quantity <= 50 then '*'
+            when stock_quantity <= 100 then '**'
+            else '***'
+        end as STOCK
+    from books;
+
+------------------------------------------------
+
+    select title, author_lname,
+        CASE
+            when title like '%stories%' then 'Short Stories'
+            when title = 'just kids' || title like '%a heartbreaking work%' then 'Memoir'
+            else 'Novel'
+        end as Type
+    from books;
+
+    SELECT author_fname, author_lname,
+        CASE 
+            WHEN COUNT(*) = 1 THEN '1 book'
+            ELSE CONCAT(COUNT(*), ' books')
+        END AS COUNT
+    FROM books 
+    GROUP BY author_lname, author_fname;
+
+------------------------------------------------
+------------------------------------------------
+
+###################
+####   JOINS   ####
+###################
+
+instead of something like:
+
+SELECT * FROM orders WHERE customer_id =
+    (
+        SELECT customer_id FROM customers
+        WHERE last_name = 'George'
+    );
+
+let's make some table babies!
+
+------------------------------------------------
+
+-- implicit inner join --
+
+    SELECT first_name, last_name, order_date 
+    FROM customers, orders 
+        WHERE customers.id = orders.customer_id;
+
+------------------------------------------------
+
+
+
+
+------------------------------------------------
+
+
+
+
+------------------------------------------------
+
+
+
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
+------------------------------------------------
