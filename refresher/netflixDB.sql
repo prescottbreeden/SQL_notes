@@ -5,10 +5,10 @@ CREATE SCHEMA IF NOT EXISTS netflixDB
 
 USE netflixDB;
 
--- CREATING reviewers TABLE
+-- CREATING users TABLE
 
-CREATE TABLE IF NOT EXISTS reviewers (
-	reviewer_id		INTEGER			NOT NULL	AUTO_INCREMENT	PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS users (
+	user_id			INTEGER			NOT NULL	AUTO_INCREMENT	PRIMARY KEY,
 	first_name		VARCHAR(20)		NOT NULL,
 	last_name		VARCHAR(20)		NOT NULL,
 	email			VARCHAR(255)	NOT NULL	DEFAULT 'gmail@gmail.com;',
@@ -39,16 +39,16 @@ CREATE TABLE IF NOT EXISTS series (
 		REFERENCES genres(genre_id)
 );
 
--- CREATING REVIEWS TABLE
+-- CREATING RATINGS TABLE
 
-CREATE TABLE IF NOT EXISTS reviews (
+CREATE TABLE IF NOT EXISTS ratings (
 	rating_id		INTEGER			NOT NULL	AUTO_INCREMENT	PRIMARY KEY,
 	rating			DECIMAL(2,1)	NOT NULL,
 	series_id		INTEGER			NOT NULL,
-	reviewer_id		INTEGER			NOT NULL,
+	user_id			INTEGER			NOT NULL,
 
-	FOREIGN KEY (reviewer_id)
-		REFERENCES reviewers(reviewer_id),
+	FOREIGN KEY (user_id)
+		REFERENCES users(user_id),
 	FOREIGN KEY (series_id)
 		REFERENCES series(series_id)
 );
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS reviews (
 
 -- INSERT REVIWERS DATUM
 
- INSERT INTO reviewers (first_name, last_name) 
+ INSERT INTO users (first_name, last_name) 
  VALUES ('Thomas', 'Stoneman'),
 		('Wyatt', 'Skaggs'),
 		('Kimbra', 'Masters'),
@@ -91,9 +91,9 @@ CREATE TABLE IF NOT EXISTS reviews (
 		('Seinfeld', 1989, 3),
 		('Stranger Things', 2016, 4);
 
--- INSERT REVIEWS DATUM
+-- INSERT RATINGS DATUM
 
- INSERT INTO reviews(series_id, reviewer_id, rating) 
+ INSERT INTO ratings (series_id, user_id, rating) 
  VALUES (1, 1, 8.0),
 		(1, 2, 7.5),
 		(1, 3, 8.5),
