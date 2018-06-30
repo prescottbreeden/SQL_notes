@@ -26,7 +26,8 @@ CREATE TABLE reviews (
 
 -- INSERTING A BUNCH OF DATA
 
-INSERT INTO series (title, released_year, genre) VALUES
+INSERT INTO series (title, released_year, genre) 
+VALUES
     ('Archer', 2009, 'Animation'),
     ('Arrested Development', 2003, 'Comedy'),
     ("Bob's Burgers", 2011, 'Animation'),
