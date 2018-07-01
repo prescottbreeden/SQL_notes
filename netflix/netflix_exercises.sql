@@ -41,7 +41,7 @@ USE netflixDB;
 		WHERE u.user_id = 5
 		ORDER BY 1,3 DESC, 2;
 
-SELECT g.genre_type,
+ SELECT g.genre_type,
 		IFNULL(ROUND(AVG(r.rating), 2), 'NOT RATED') AS 'user 5 averages'
    FROM ratings AS r
 		JOIN series AS s
@@ -52,7 +52,7 @@ SELECT g.genre_type,
 		GROUP BY g.genre_id
 		ORDER BY 2 DESC, 1;
 
-SELECT g.genre_type,
+ SELECT g.genre_type,
 		IFNULL(ROUND(AVG(r.rating), 2), 'NOT RATED') AS 'all user averages'
    FROM ratings AS r
 		JOIN series AS s
@@ -61,3 +61,36 @@ SELECT g.genre_type,
 		ON g.genre_id = s.genre_id
 		GROUP BY g.genre_id
 		ORDER BY 2 DESC, 1;
+
+ SELECT s.title
+   FROM series AS s
+		LEFT JOIN ratings AS r
+		ON s.series_id = r.series_id
+		WHERE rating IS NULL;
+
+
+ SELECT u.first_name,
+		u.last_name,
+		COUNT(r.rating) AS 'COUNT',
+		IFNULL(MIN(r.rating), 0) AS 'MIN',
+		IFNULL(MAX(r.rating), 0) AS 'MAX',
+		IFNULL(ROUND(AVG(r.rating), 2), 0) AS 'AVG',
+		CASE
+			WHEN COUNT(r.rating) > 0 THEN 'ACTIVE'
+			ELSE 'INACTIVE'
+		END AS 'STATUS'
+   FROM users AS u
+		LEFT JOIN ratings as r
+		ON u.user_id = r.user_id
+		GROUP BY u.user_id;
+
+ SELECT s.title,
+		r.rating,
+		CONCAT(u.first_name, ' ', u.last_name) AS reviewer
+   FROM series AS s
+		JOIN ratings AS r
+		ON s.series_id = r.series_id
+		JOIN users AS u
+		ON u.user_id = r.user_id
+		ORDER BY 1, u.user_id;
+
