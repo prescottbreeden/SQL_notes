@@ -1,3 +1,7 @@
+-- select instagram data;
+
+USE ig_clone;
+
 -- We want to reward our users who have been around the longest. Find the 5 oldest users.
 
  SELECT u.username,
@@ -56,17 +60,22 @@ SELECT (SELECT COUNT(*) FROM photos) /
 
 -- What are the top 5 most commonly used hashtags?
 
+ SELECT t.tag_id,
+		t.tag_name,
+		COUNT(*) AS total
+   FROM tags as t
+		JOIN photo_tags AS pt
+		ON t.tag_id = pt.tag_id
+		GROUP BY t.tag_id
+		ORDER BY total DESC, t.created_at
+		LIMIT 15;
 
+-- Find users who have liked every single photo on the site
 
-
-
-
-
-
-
-
-
-
-
-
-
+ SELECT u.username,
+		count(*) AS total_likes
+   FROM users AS u
+		JOIN likes as l
+		ON u.user_id = l.user_id
+		GROUP BY u.user_id
+		HAVING count(*) = (SELECT COUNT(*) FROM photos);
